@@ -29,7 +29,7 @@ class PhpmigApplication extends Application
     /**
      * @param string $version
      */
-    public function __construct($version = 'dev', \ArrayAccess $di = [])
+    public function __construct($version = 'dev', \ArrayAccess $di = null)
     {
         parent::__construct('phpmig', $version);
 

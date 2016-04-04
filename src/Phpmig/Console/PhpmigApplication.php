@@ -29,20 +29,30 @@ class PhpmigApplication extends Application
     /**
      * @param string $version
      */
-    public function __construct($version = 'dev')
+    public function __construct($version = 'dev', \ArrayAccess $di = [])
     {
         parent::__construct('phpmig', $version);
 
+        $initCommand     = isset($di['phpmig.initCmd']) ? $di['phpmig.initCmd'] : new Command\InitCommand();
+        $statusCommand   = isset($di['phpmig.statusCmd']) ? $di['phpmig.statusCmd'] : new Command\StatusCommand();
+        $checkCommand    = isset($di['phpmig.checkCmd']) ? $di['phpmig.checkCmd'] : new Command\CheckCommand();
+        $generateCommand = isset($di['phpmig.generateCmd']) ? $di['phpmig.generateCmd'] : new Command\GenerateCommand();
+        $upCommand       = isset($di['phpmig.upCmd']) ? $di['phpmig.upCmd'] : new Command\UpCommand();
+        $downCommand     = isset($di['phpmig.downCmd']) ? $di['phpmig.downCmd'] : new Command\DownCommand();
+        $migrateCommand  = isset($di['phpmig.migrateCmd']) ? $di['phpmig.migrateCmd'] : new Command\MigrateCommand();
+        $rollbackCommand = isset($di['phpmig.rollbackCmd']) ? $di['phpmig.rollbackCmd'] : new Command\RollbackCommand();
+        $redoCommand     = isset($di['phpmig.redoCmd']) ? $di['phpmig.redoCmd'] : new Command\RedoCommand();
+
         $this->addCommands(array(
-            new Command\InitCommand(),
-            new Command\StatusCommand(),
-            new Command\CheckCommand(),
-            new Command\GenerateCommand(),
-            new Command\UpCommand(),
-            new Command\DownCommand(),
-            new Command\MigrateCommand(),
-            new Command\RollbackCommand(),
-            new Command\RedoCommand()
+            $initCommand,
+            $statusCommand,
+            $checkCommand,
+            $generateCommand,
+            $upCommand,
+            $downCommand,
+            $migrateCommand,
+            $rollbackCommand,
+            $redoCommand
         ));
     }
 }

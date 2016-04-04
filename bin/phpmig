@@ -26,5 +26,10 @@ if (is_file(__DIR__ . '/../vendor/autoload.php')) {
     require_once "Phpmig/autoload.php.dist";
 }
 
-$app = new Phpmig\Console\PhpmigApplication(PHPMIG_VERSION);
+$di = [];
+if (is_file(__DIR__ . '/../../../../phpmig.php')) {
+    $di = require_once __DIR__ . '/../../../../phpmig.php';
+}
+
+$app = new Phpmig\Console\PhpmigApplication(PHPMIG_VERSION, $di);
 $app->run();
